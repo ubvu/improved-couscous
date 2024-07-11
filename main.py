@@ -1,2 +1,2 @@
 import pandas as pd
-import pybliometrics
+import pybliometrics as pybs
