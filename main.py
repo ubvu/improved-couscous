@@ -7,6 +7,7 @@ import scope_file as project_scope
 
 era = project_scope.era
 institutions = project_scope.institution_list
+nice_list = project_scope.NICE_LIST
 file_name = 'test_csv.csv'
 
 
@@ -16,7 +17,8 @@ def query_year(my_year):
     api_url = ("https://api.openalex.org/works?page=" + str(page_number) +
                "&filter=authorships.institutions.lineage:i865915315,publication_year:2022,"
                "type:types/article&select=id,topics,doi,ids,publication_year,fwci,type,cited_by_count,"
-               "cited_by_percentile_year,open_access,sustainable_development_goals,counts_by_year")
+               "cited_by_percentile_year,open_access,sustainable_development_goals,counts_by_year"
+               "&mailto=" + str(nice_list))
     response = requests.get(api_url)
     return response.json()
 
@@ -40,5 +42,5 @@ for inst in institutions:
         while keep_at_it:
             this_json = query_year(year)
             unpack(this_json, year)
-            page_number += 1
+            page_number += 100
             print(page_number)
