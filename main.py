@@ -8,7 +8,6 @@ import scope_file as project_scope
 era = project_scope.era
 institutions = project_scope.institution_dict
 nice_list = project_scope.NICE_LIST
-file_name = 'test_csv.csv'
 
 
 def query_year(my_year, my_value):
