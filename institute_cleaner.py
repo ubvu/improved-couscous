@@ -43,6 +43,20 @@ def find_main_institute(json_string):
     return set(collector)
 
 
+def test_for_sdg(my_string, my_sdg):
+    my_list = ast.literal_eval(my_string)
+    for my_list_object in my_list:
+        if int(my_list_object['id'].rsplit('/')[-1]) == my_sdg:
+            return my_list_object['score']
+        else:
+            return 0
+
+
+def get_openaccess_status(my_string):
+    my_dict = ast.literal_eval(my_string)
+    return my_dict['oa_status']
+
+
 for filename in os.listdir(path):
     f = os.path.join(path, filename)
     if os.path.isfile(f):
@@ -50,4 +64,9 @@ for filename in os.listdir(path):
         df['authorships'] = df['authorships'].apply(find_main_institute)
         for key, value in uni_list.items():
             df[key] = df['authorships'].apply(lambda x: key in x)
+        for i in range(1, 18, 1):
+            df[f"sdg{i}"] = df["sustainable_development_goals"].apply(test_for_sdg, args=(i,))
+        df['open_access'] = df['open_access'].apply(get_openaccess_status)
         df.to_csv(".\\clean\\" + f, index=False)
+
+
