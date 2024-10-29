@@ -9,7 +9,6 @@ institution_dict = {"Vrije Universiteit": "i865915315", "Universiteit van Amster
                     "Universiteit Eindhoven": "i83019370", "Universiteit Maastricht": "i34352273", "Radboud "
                     "Universiteit Nijmegen": "i145872427", "Wageningen Universiteit": "i913481162", "Universiteit "
                     "Utrecht": "i193662353", "Universiteit Twente": "i94624287", "Rijksuniversiteit Groningen":
-                    "i169381384"}
-NICE_LIST = "john.doe@example.com"
-
+                    "i169381384", "Open Universiteit": "i7876267"}
+NICE_LIST = "m.r.jouvenaz@vu.nl"
 

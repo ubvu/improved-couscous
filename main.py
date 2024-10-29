@@ -27,11 +27,13 @@ def query_year(my_year, my_value):
             if key1 == "topics":
                 topics = {}
                 for val in value1:
-                    if float(val["score"]) >= 0.8:
-                        topics.update({"id": val["id"], "display_name": val["display_name"],
-                                       "field": val["field"]["display_name"], "score": val["score"]})
-                    else:
-                        break
+                    topics.update({"id": val["id"], "display_name": val["display_name"],
+                                   "field": val["field"]["display_name"], "score": val["score"]})
+                    # if float(val["score"]) >= 0.8:
+                    #     topics.update({"id": val["id"], "display_name": val["display_name"],
+                    #                    "field": val["field"]["display_name"], "score": val["score"]})
+                    # else:
+                    #     break
                 resp2.update({key1: topics})
             elif key1 == "authorships":
                 authorships = []
@@ -57,5 +59,5 @@ for key, value in institutions.items():
                 keep_at_it = False
             page_number += 1
         datafile = pd.DataFrame.from_records(dataSet)
-        datafile.to_csv(".\\output\\" + str(key) + "_" + str(year) + ".csv")
+        datafile.to_csv(".\\output\\" + str(key) + "_" + str(year) + ".csv", sep=";")
         del dataSet

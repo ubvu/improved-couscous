@@ -10,8 +10,8 @@ path = './output'
 
 def find_main_institute(json_string):
     collector = []
-    for thingamadoodle in ast.literal_eval(json_string):
-        match (thingamadoodle['id'].split("/"))[-1]:
+    for institute_string in ast.literal_eval(json_string):
+        match (institute_string['id'].split("/"))[-1]:
             case "I865915315" | "I4210145651" | "I4210108594" | "I4210124285" | "I911458345" | "I4210153566":
                 collector.append("Vrije Universiteit")
             case "I887064364" | "I4210145651" | "I4210109446" | "I4210108594" | "I4210114434" | "I4210153566" | "I2802928900":
@@ -57,16 +57,25 @@ def get_openaccess_status(my_string):
     return my_dict['oa_status']
 
 
+# for filename in os.listdir(path):
+#     f = os.path.join(path, filename)
+#     if os.path.isfile(f):
+#         df = pd.read_csv(f, index_col=False)
+#         df['authorships'] = df['authorships'].apply(find_main_institute)
+#         for key, value in uni_list.items():
+#             df[key] = df['authorships'].apply(lambda x: key in x)
+#         for i in range(1, 18, 1):
+#             df[f"sdg{i}"] = df["sustainable_development_goals"].apply(test_for_sdg, args=(i,))
+#         df['open_access'] = df['open_access'].apply(get_openaccess_status)
+#         df.to_csv(".\\clean\\" + f, index=False)
+
+my_frame = pd.DataFrame()
 for filename in os.listdir(path):
     f = os.path.join(path, filename)
     if os.path.isfile(f):
-        df = pd.read_csv(f, index_col=False)
-        df['authorships'] = df['authorships'].apply(find_main_institute)
-        for key, value in uni_list.items():
-            df[key] = df['authorships'].apply(lambda x: key in x)
+        df = pd.read_csv(f, index_col=False, sep=';')
+        df[filename] = True
         for i in range(1, 18, 1):
-            df[f"sdg{i}"] = df["sustainable_development_goals"].apply(test_for_sdg, args=(i,))
+            df[f'sdg{i}'] = df['sustainable_development_goals'].apply(test_for_sdg, args=(i,))
         df['open_access'] = df['open_access'].apply(get_openaccess_status)
-        df.to_csv(".\\clean\\" + f, index=False)
-
-
+        df.to_csv(".\\clean\\" + filename + ".csv", index=False)
